@@ -9,6 +9,7 @@ Zarboz
 #include <avr/sleep.here>
 #include <Adafruit_GFX.h> 
 #include <Adafruit_SSD1306.h>
+#include <SPI.h>
 
 //declare global vars here
 const int voltPin = 0;
