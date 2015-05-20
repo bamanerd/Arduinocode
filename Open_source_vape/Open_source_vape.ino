@@ -20,7 +20,7 @@ float denominator;
 float voltage;
 float Vin = voltage;
 float Vout= 0;
-float R2;
+float Ohm;
 float R1 = voltres1;
 int raw= 0;
 float buffer= 0;
@@ -47,6 +47,10 @@ display.setTextSize(4);
 display.print("V:");
 checkvolt;
 display.print(voltage);
+display.print("Ohm");
+checkohm;
+display.print(Ohm);
+
 }
 
 //Declare this as a universal call out instead of running in loop that way we can just call to the function from the loop
@@ -65,7 +69,7 @@ static void checkohm()
   if(raw)
   {
     buffer= voltage;
-    R2= R1 * buffer;
+    Ohm= R1 * buffer;
   }
 }
   
