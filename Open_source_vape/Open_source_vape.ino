@@ -13,16 +13,18 @@ Zarboz
 #include <Wire.h>
 
 //declare global vars here
-const int voltPin = 0;  //output voltage between dividers goes into analog pin 0 using 10kohm resistor and 2.5k ohm resistor we will have accuracy to the hundredth up to 25v.
-int voltres1 = 10000;
-int voltres2 = 2500;
-float denominator;
-float voltage;
-float Vin = voltage;
-float Vout= 0;
-float Ohm;
-float R1 = voltres1;
+const int voltPin = 0; 
+int mVperAmp = 66; // use 100 for 20A Module and 66 for 30A Module
+int RawValue= 0;
+int ACSoffset = 2500; 
+double Voltage = 0;
+double Amps = 0;
+int ohmPin= 1;
 int raw= 0;
+int Vin= Voltage;
+float Vout= 0;
+float R1= 1000;
+float R2= 0;
 float buffer= 0;
 
 #define OLED_MOSI   9
@@ -37,7 +39,6 @@ void setup () {
   display.display(); // show splashscreen
   delay(500);
   display.clearDisplay();
-  denominator = (float)voltres2 / (voltres1 + voltres2);
 }
 
 
@@ -46,34 +47,39 @@ display.setTextColor(WHITE);
 display.setTextSize(4);
 display.setCursor(1,0);
 display.print("V:");
-checkvolt;
-display.setCursor(1.3);
-display.print(voltage);
-display.setCursor(2,0);
-display.print("Ohm:");
+display.setCursor(1,3);
+checkvoltamp;
+display.print(Voltage,3);
+display.setCursor(5,0);
+display.print("Amps:");
+display.setCursor(5,6);
+display.print(Amps,3);
 checkohm;
-display.setCursor(2,5);
-display.print(Ohm);
+display.setCursor(1,5);
+display.print("ohm:");
+display.setCursor(1,11);
+display.print(R2,3);
+
 
 }
 
 //Declare this as a universal call out instead of running in loop that way we can just call to the function from the loop
 //todo: move this to its own CPP and h file
-static void checkvolt()
-{
-	voltage = analogRead(voltPin);
-	voltage = (voltage / 1024) * 5.0;
-	voltage = voltage / denominator;
-	delay (500);
-	}
-
-static void checkohm()
-{
-  raw= analogRead(voltPin);
-  if(raw)
+static void checkvoltamp()
   {
-    buffer= voltage;
-    Ohm= R1 * buffer;
-  }
+  RawValue = analogRead(voltPin);
+  Voltage = (RawValue / 1023.0) * 5000; // Gets you mV
+  Amps = ((Voltage - ACSoffset) / mVperAmp);
 }
   
+static void checkohm()
+{
+  raw= analogRead(ohmPin);
+if(raw) 
+  {
+  buffer= raw * Vin;
+  Vout= (buffer)/1024.0;
+  buffer= (Vin/Vout) -1;
+  R2= R1 * buffer;
+  }
+}
