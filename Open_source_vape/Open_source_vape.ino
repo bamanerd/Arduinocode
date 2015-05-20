@@ -18,6 +18,12 @@ int voltres1 = 10000;
 int voltres2 = 2500;
 float denominator;
 float voltage;
+float Vin = voltage;
+float Vout= 0;
+float R2;
+float R1 = voltres1;
+int raw= 0;
+float buffer= 0;
 
 #define OLED_MOSI   9
 #define OLED_CLK   10
@@ -45,9 +51,21 @@ display.print(voltage);
 
 //Declare this as a universal call out instead of running in loop that way we can just call to the function from the loop
 //todo: move this to its own CPP and h file
-static void checkvolt(	
+static void checkvolt()
+{
 	voltage = analogRead(voltPin);
 	voltage = (voltage / 1024) * 5.0;
 	voltage = voltage / denominator;
 	delay (500);
 	}
+
+static void checkohm()
+{
+  raw= analogRead(voltPin);
+  if(raw)
+  {
+    buffer= voltage;
+    R2= R1 * buffer;
+  }
+}
+  
