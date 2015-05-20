@@ -43,9 +43,9 @@ checkvolt;
 display.print(voltage);
 }
 
-static void checkvolt()
-{
-	
+//Declare this as a universal call out instead of running in loop that way we can just call to the function from the loop
+//todo: move this to its own CPP and h file
+static void checkvolt(	
 	voltage = analogRead(voltPin);
 	voltage = (voltage / 1024) * 5.0;
 	voltage = voltage / denominator;
