@@ -23,7 +23,7 @@ int ohmPin= 1;
 int raw= 0;
 int Vin= Voltage;
 float Vout= 0;
-float R1= 1000;
+float R1= 5;
 float R2= 0;
 float buffer= 0;
 
