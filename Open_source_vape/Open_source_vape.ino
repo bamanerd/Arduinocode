@@ -13,7 +13,7 @@ Zarboz
 #include <Wire.h>
 
 //declare global vars here
-const int voltPin = 0;  //output voltage between dividers goes into analog pin 0 
+const int voltPin = 0;  //output voltage between dividers goes into analog pin 0 using 10kohm resistor and 2.5k ohm resistor we will have accuracy to the hundredth up to 25v.
 int voltres1 = 10000;
 int voltres2 = 2500;
 float denominator;
