@@ -27,6 +27,7 @@ void setup () {
   display.display(); // show splashscreen
   delay(500);
   display.clearDisplay();
+  denominator = (float)voltres2 / (voltres1 + voltres2);
 }
 
 
