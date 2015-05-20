@@ -44,11 +44,15 @@ void setup () {
 void loop(){
 display.setTextColor(WHITE);
 display.setTextSize(4);
+display.setCursor(1,0);
 display.print("V:");
 checkvolt;
+display.setCursor(1.3);
 display.print(voltage);
-display.print("Ohm");
+display.setCursor(2,0);
+display.print("Ohm:");
 checkohm;
+display.setCursor(2,5);
 display.print(Ohm);
 
 }
