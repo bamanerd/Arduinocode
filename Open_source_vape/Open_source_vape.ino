@@ -5,16 +5,19 @@ Contributor list:
 Zarboz
 */
 //list libraries needed here
-#include <avr.h>
-#include <avr/sleep.here>
-#include <Adafruit_GFX.h> 
+#include <Arduino.h>
+#include <avr/sleep.h>
+#include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <SPI.h>
+#include <Wire.h>
 
 //declare global vars here
 const int voltPin = 0;
 int voltres1 = 10000;
 int voltres2 = 2500;
+float denominator;
+float voltage;
 
 #define OLED_MOSI   9
 #define OLED_CLK   10
@@ -42,7 +45,7 @@ display.print(voltage);
 
 static void checkvolt()
 {
-	float voltage;
+	
 	voltage = analogRead(voltPin);
 	voltage = (voltage / 1024) * 5.0;
 	voltage = voltage / denominator;
