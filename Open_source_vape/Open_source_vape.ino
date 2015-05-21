@@ -16,8 +16,8 @@ Claviger battery code
 //declare global vars here
 //pinout goes here
 const int voltPin = A0; //acs712 input to A0 
-const int ohmPin= A1;
-const int batteryVoltage = A2;
+const int ohmPin= A1; //voltage divider with our 5ohm resistor
+const int batteryVoltage = A2; //readout our battery voltage with a2 with 4.7k ohm voltage divider being read.
 
 #define OLED_MOSI   9
 #define OLED_CLK   10
