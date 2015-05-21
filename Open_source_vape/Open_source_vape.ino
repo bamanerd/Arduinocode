@@ -3,6 +3,7 @@ GNU GPLv3 License
 
 Contributor list:
 Zarboz
+Claviger battery code
 */
 //list libraries needed here
 #include <Arduino.h>
@@ -33,7 +34,7 @@ double Amps = 0;
 int raw= 0;
 int Vin= Voltage;
 float Vout= 0;
-float R1= 5;
+float R1= 5;  //we use a 5ohm resistor for the ohmpinA1 voltage divider in order to determine our atomizer resistance
 float ohm= 0;
 float buffer= 0;
 float watt= 0;
