@@ -119,7 +119,7 @@ if(raw)
 
 static void checkwatt()
 {
-  watt = (sq(Voltage) / ohm);
+  watt = (Voltage*Voltage) / ohm;
   delay(10);
 }
 
