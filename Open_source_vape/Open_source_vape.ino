@@ -13,13 +13,21 @@ Zarboz
 #include <Wire.h>
 
 //declare global vars here
+//pinout goes here
 const int voltPin = 0; 
+const int ohmPin= 1;
+#define OLED_MOSI   9
+#define OLED_CLK   10
+#define OLED_DC    14
+#define OLED_CS    15
+#define OLED_RESET 16
+
+//vars go here
 int mVperAmp = 66; // use 100 for 20A Module and 66 for 30A Module
 int RawValue= 0;
 int ACSoffset = 2500; 
 double Voltage = 0;
 double Amps = 0;
-int ohmPin= 1;
 int raw= 0;
 int Vin= Voltage;
 float Vout= 0;
@@ -28,11 +36,9 @@ float ohm= 0;
 float buffer= 0;
 float watt= 0;
 
-#define OLED_MOSI   9
-#define OLED_CLK   10
-#define OLED_DC    14
-#define OLED_CS    15
-#define OLED_RESET 16
+
+
+
 Adafruit_SSD1306 display(OLED_MOSI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);
 
 void setup () { 
