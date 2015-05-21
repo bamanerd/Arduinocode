@@ -14,8 +14,10 @@ Zarboz
 
 //declare global vars here
 //pinout goes here
-const int voltPin = 0; 
-const int ohmPin= 1;
+const int voltPin = A0; 
+const int ohmPin= A1;
+const int batteryVoltage = A2;
+
 #define OLED_MOSI   9
 #define OLED_CLK   10
 #define OLED_DC    14
@@ -35,8 +37,9 @@ float R1= Voltage;
 float ohm= 0;
 float buffer= 0;
 float watt= 0;
-
-
+float Bvoltage2 = 0;
+int Bpercent = 0; 
+float Vbatt = 0;
 
 
 Adafruit_SSD1306 display(OLED_MOSI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);
@@ -50,6 +53,23 @@ void setup () {
 
 
 void loop(){
+ //First things first lets check our battery and make sure we are able to run if battery is low then display a lockout screen
+checkbatt;
+if (Bvoltage2 < 6.39) 
+  {
+    display.clearDisplay();
+    display.setTextColor(WHITE);
+    display.setTextSize(2);
+    display.setCursor(22,9);
+    display.print("LOW BATTERY");
+    display.setCursor(16,34);
+    display.print("Please Charge");
+    display.setCursor(40,51);
+    display.print("BV:");
+    display.print(Bvoltage2);
+    display.ssd1306_command(SSD1306_DISPLAYOFF);
+  }
+  else{
 display.setTextColor(WHITE);
 display.setTextSize(4);
 display.setCursor(1,0);
@@ -71,6 +91,7 @@ display.setCursor(5,7);
 display.print("W:");
 display.setCursor(5,10);
 display.print(watt);
+  }
 
 }
 
@@ -99,4 +120,13 @@ static void checkwatt()
 {
   watt = (sq(Voltage) / ohm);
   delay(10);
+}
+
+static void checkbatt()
+{
+  Vbatt = analogRead(batteryVoltage);               // Reads the voltage of analog pin 2 to determin the voltage going to the battery
+  float Bvoltage1 = Vbatt * (5.0 / 1023);      // Convert the raw value being read from analog pin 1 into a voltage value
+  float Bvoltage2 = 2 * Bvoltage1;             //doubles the initial battery voltage calculation, required because the battery voltage is read using a voltage divider so is 1/2 what it really is, needed for safety of arduino since it will be over 5 volts
+  float Bpercent1 = (Bvoltage2 - 6.4);         // creats a value to use in calculating battery percetn remaining.
+  int Bpercent = (Bpercent1 * 100) / 2; 
 }
