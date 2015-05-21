@@ -14,7 +14,7 @@ Zarboz
 
 //declare global vars here
 //pinout goes here
-const int voltPin = A0; 
+const int voltPin = A0; //acs712 input to A0 
 const int ohmPin= A1;
 const int batteryVoltage = A2;
 
@@ -33,7 +33,7 @@ double Amps = 0;
 int raw= 0;
 int Vin= Voltage;
 float Vout= 0;
-float R1= Voltage;
+float R1= 5;
 float ohm= 0;
 float buffer= 0;
 float watt= 0;
