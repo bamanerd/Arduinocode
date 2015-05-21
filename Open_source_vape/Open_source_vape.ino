@@ -23,9 +23,10 @@ int ohmPin= 1;
 int raw= 0;
 int Vin= Voltage;
 float Vout= 0;
-float R1= 5;
-float R2= 0;
+float R1= Voltage;
+float ohm= 0;
 float buffer= 0;
+float watt= 0;
 
 #define OLED_MOSI   9
 #define OLED_CLK   10
@@ -58,8 +59,12 @@ checkohm;
 display.setCursor(1,5);
 display.print("ohm:");
 display.setCursor(1,11);
-display.print(R2,3);
-
+display.print(ohm,3);
+checkwatt;
+display.setCursor(5,7);
+display.print("W:");
+display.setCursor(5,10);
+display.print(watt);
 
 }
 
@@ -80,6 +85,12 @@ if(raw)
   buffer= raw * Vin;
   Vout= (buffer)/1024.0;
   buffer= (Vin/Vout) -1;
-  R2= R1 * buffer;
+  ohm= R1 * buffer;
   }
+}
+
+static void checkwatt()
+{
+  watt = (sq(Voltage) / ohm);
+  delay(10);
 }
