@@ -70,7 +70,7 @@ int PowerConvFunction = 0;  // ignore this, but dont change it used in button pr
 // Sleep Code
  void wakeUpNow() {             // here the interrupt is handled after wakeup
  // Wake up actions
-  digitalWrite (powerConverter, HIGH);
+  digitalWrite (powerConverter, LOW);
   delay(50);  
   }
 
@@ -119,13 +119,13 @@ if (button1.clicks != 0) PowerConvFunction = button1.clicks;  // sets powerconvf
   
 // Ensure the converter stays OFF when not doing anything
   if(button1.clicks == 0) { 
-    digitalWrite (powerConverter, HIGH);  
+    digitalWrite (powerConverter, LOW);  
     //digitalWrite (ohmPin, LOW);                  // Disables the Ohm Meter circuit  
     }
   
 if (button1.clicks == 1) { // if button is pressed one time, this turns off the display and ensures the atty is not firing
     display.ssd1306_command(SSD1306_DISPLAYOFF);
-    digitalWrite (powerConverter, HIGH);  
+    digitalWrite (powerConverter, LOW);  
     //digitalWrite (ohmPin, LOW);                  // Disables the Ohm Meter circuit  
     }
    
@@ -154,7 +154,7 @@ if (button1.clicks == 1) { // if button is pressed one time, this turns off the 
      puffTimer = 0;
      //fireLED = true;
      Vatty = analogRead(atomizerVoltage);
-     digitalWrite (powerConverter, LOW);         // Turn on the DC-DC converter output
+     digitalWrite (powerConverter, HIGH);         // Turn on the DC-DC converter output
      count = 0;
      break;
     }
@@ -163,7 +163,7 @@ if (button1.clicks == 1) { // if button is pressed one time, this turns off the 
      countLimit ++;
      //fireLED = true;
      Vatty = analogRead(atomizerVoltage);
-     digitalWrite (powerConverter, HIGH);         // Turn on the DC-DC converter output
+     digitalWrite (powerConverter, LOW);         // Turn off the DC-DC converter output
      count = 0;
      break;
      }
@@ -179,7 +179,7 @@ if (button1.clicks == 1) { // if button is pressed one time, this turns off the 
      puffTimer = 0;
      //fireLED = true;
      Vatty = analogRead(atomizerVoltage);
-     digitalWrite (powerConverter, LOW);         // Turn on the DC-DC converter output
+     digitalWrite (powerConverter, HIGH);         // Turn on the DC-DC converter output
      count = 0;
      break;
     }
@@ -188,7 +188,7 @@ if (button1.clicks == 1) { // if button is pressed one time, this turns off the 
      countLimit ++;
      //fireLED = true;
      Vatty = analogRead(atomizerVoltage);
-     digitalWrite (powerConverter, HIGH);         // Turn on the DC-DC converter output
+     digitalWrite (powerConverter, LOW);         // Turn on the DC-DC converter output
      count = 0;
      break;
      }
@@ -229,7 +229,7 @@ if (VTime <= 60) VTimeD = VTime;
    
 // Low Voltage Lockout Code   
   if (Bvoltage2 < 6.39) {                        
-    digitalWrite (powerConverter, HIGH);  //Set the Fire pin to off
+    digitalWrite (powerConverter, LOW);  //Set the Fire pin to off
     // Low Batt Warning Display
     display.clearDisplay(); 
     display.setTextColor(WHITE);
