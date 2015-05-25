@@ -16,7 +16,7 @@ Insiduous for some math equations simplification for wattage calcuation
 
 //declare global vars here
 //pinout goes here
-const int voltPin = A0; //acs712 input to A0 
+const int voltPin = A0; //lm4040 input to A0 
 const int ohmPin= A1; //voltage divider with our 5ohm resistor
 const int batteryVoltage = A2; //readout our battery voltage with a2 with 4.7k ohm voltage divider being read.
 const int digipin = 10;
@@ -111,8 +111,8 @@ display.print(watt);
 //todo: move this to its own CPP and h file
 static void checkvoltamp()
   {
-  RawValue = analogRead(voltPin);
-  Voltage = (RawValue / 1023.0) * 5000; // Gets you mV
+  int voltvalue = analogRead(voltPin);
+  float Voltage = voltvalue * (5.0 / 1023.0);
   Amps = ((Voltage - ACSoffset) / mVperAmp);
 }
   
