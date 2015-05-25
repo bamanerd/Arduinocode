@@ -4,6 +4,7 @@ GNU GPLv3 License
 Contributor list:
 Zarboz
 Claviger battery code
+Insiduous for some math equations simplification for wattage calcuation
 */
 //list libraries needed here
 #include <Arduino.h>
