@@ -1,0 +1,12 @@
+Change oled code over to segment display
+Define a menu layout system to scroll through settings like:
+Ohm
+Watt
+Voltage
+Battery Voltage
+
+Make code for LED around firebutton blink when scrolling menus
+also make led light when firing device.
+
+this is mainly just for kicks n giggles since there seems no production from gryphon on their box/PCB
+
