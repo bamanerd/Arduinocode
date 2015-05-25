@@ -27,8 +27,8 @@ const int digipin = 10;
 /*
 GND goes to ground
 Vin goes to 5V
-SDA to I2C Data (on the Uno, this is A4 on the Mega it is 20 and on the Leonardo digital 2)
-SCL  to I2C Clock(on the Uno, this is A5 on the Mega it is 21 and on the Leonardo digital 3)
+SDA to I2C Data (on the Uno and pro micro/mini any 328p chip, this is A4 )
+SCL  to I2C Clock(on the Uno and pro micro/mini any 328p chip, this is A5)
 RST to digital 4  (you can change this pin in the code, later)*/
 
 #define OLED_RESET 4
@@ -65,7 +65,7 @@ void setup () {
 
 void loop(){
  //First things first lets check our battery and make sure we are able to run if battery is low then display a lockout screen
-checkbatt;
+checkbatt();
 if (Bvoltage2 < 6.39) 
   {
     display.clearDisplay();
@@ -86,18 +86,18 @@ display.setTextSize(4);
 display.setCursor(1,0);
 display.print("V:");
 display.setCursor(1,3);
-checkvoltamp;
+checkvoltamp();
 display.print(Voltage,3);
 display.setCursor(5,0);
 display.print("Amps:");
 display.setCursor(5,6);
 display.print(Amps,3);
-checkohm;
+checkohm();
 display.setCursor(1,5);
 display.print("ohm:");
 display.setCursor(1,11);
 display.print(ohm,3);
-checkwatt;
+checkwatt();
 display.setCursor(5,7);
 display.print("W:");
 display.setCursor(5,10);
