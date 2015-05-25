@@ -55,6 +55,10 @@ int Bpercent = 0;
 float Vbatt = 0;
 int count = 0;
 
+#if (SSD1306_LCDHEIGHT != 64)
+#error("Height incorrect, please fix Adafruit_SSD1306.h!");
+#endif
+
 Adafruit_SSD1306 display(OLED_RESET);
 
 void setup () { 
@@ -101,6 +105,10 @@ display.print("Amps:");
 display.setCursor(5,6);
 display.print(Amps,3);
 checkohm();
+if (ohm < 0.29) {
+  display.clearDisplay();
+  display.print("low resistance");
+}
 display.setCursor(1,5);
 display.print("ohm:");
 display.setCursor(1,11);
