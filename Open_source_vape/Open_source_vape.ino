@@ -16,13 +16,15 @@ Insiduous for some math equations simplification for wattage calcuation
 
 //declare global vars here
 //pinout goes here
-const int voltPin = A0; //acs712 input to A0 
+const int voltPin = A0; //lm4040 input to A0 
 const int ohmPin= A1; //voltage divider with our 5ohm resistor
 const int batteryVoltage = A2; //readout our battery voltage with a2 with 4.7k ohm voltage divider being read.
 const int digipin = 10;
 //CS - to digital pin 10 IE digipin
 //SDI - digital pin 11
 //CLK - digital pin 13
+const int firebutton = 8;
+const int buckpin = 7;
 
 //define the oled LCD as a i2c device instead of SPI as we will use SPI for digi pot
 /*
@@ -57,6 +59,8 @@ Adafruit_SSD1306 display(OLED_RESET);
 void setup () { 
   pinMode (digipin, OUTPUT);
   SPI.begin();
+  pinMode(firebutton, INPUT);
+  pinMode(buckpin, OUTPUT);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.display(); // show splashscreen
   delay(500);
@@ -82,6 +86,7 @@ if (Bvoltage2 < 6.39)
     display.ssd1306_command(SSD1306_DISPLAYOFF);
   }
   else{
+display.clearDisplay();
 display.setTextColor(WHITE);
 display.setTextSize(4);
 display.setCursor(1,0);
@@ -109,14 +114,14 @@ display.print(watt);
 
 //Declare this as a universal call out instead of running in loop that way we can just call to the function from the loop
 //todo: move this to its own CPP and h file
-static void checkvoltamp()
+void checkvoltamp()
   {
-  RawValue = analogRead(voltPin);
-  Voltage = (RawValue / 1023.0) * 5000; // Gets you mV
+  int voltvalue = analogRead(voltPin);
+  float Voltage = voltvalue * (5.0 / 1023.0);
   Amps = ((Voltage - ACSoffset) / mVperAmp);
 }
   
-static void checkohm()
+void checkohm()
 {
   raw= analogRead(ohmPin);
 if(raw) 
@@ -128,13 +133,13 @@ if(raw)
   }
 }
 
-static void checkwatt()
+void checkwatt()
 {
   watt = (Voltage*Voltage) / ohm;
   delay(10);
 }
 
-static void checkbatt()
+void checkbatt()
 {
   Vbatt = analogRead(batteryVoltage);               // Reads the voltage of analog pin 2 to determin the voltage going to the battery
   float Bvoltage1 = Vbatt * (5.0 / 1023);      // Convert the raw value being read from analog pin 1 into a voltage value
