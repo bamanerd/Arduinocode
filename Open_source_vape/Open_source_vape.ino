@@ -18,12 +18,21 @@ Claviger battery code
 const int voltPin = A0; //acs712 input to A0 
 const int ohmPin= A1; //voltage divider with our 5ohm resistor
 const int batteryVoltage = A2; //readout our battery voltage with a2 with 4.7k ohm voltage divider being read.
+const int digipin = 10;
+//CS - to digital pin 10 IE digipin
+//SDI - digital pin 11
+//CLK - digital pin 13
 
-#define OLED_MOSI   9
-#define OLED_CLK   10
-#define OLED_DC    14
-#define OLED_CS    15
-#define OLED_RESET 16
+//define the oled LCD as a i2c device instead of SPI as we will use SPI for digi pot
+/*
+GND goes to ground
+Vin goes to 5V
+SDA to I2C Data (on the Uno, this is A4 on the Mega it is 20 and on the Leonardo digital 2)
+SCL  to I2C Clock(on the Uno, this is A5 on the Mega it is 21 and on the Leonardo digital 3)
+RST to digital 4  (you can change this pin in the code, later)*/
+
+#define OLED_RESET 4
+
 
 //vars go here
 int mVperAmp = 66; // use 100 for 20A Module and 66 for 30A Module
@@ -42,11 +51,12 @@ float Bvoltage2 = 0;
 int Bpercent = 0; 
 float Vbatt = 0;
 
-
-Adafruit_SSD1306 display(OLED_MOSI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);
+Adafruit_SSD1306 display(OLED_RESET);
 
 void setup () { 
-  display.begin(SSD1306_SWITCHCAPVCC);
+  pinMode (digipin, OUTPUT);
+  SPI.begin();
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.display(); // show splashscreen
   delay(500);
   display.clearDisplay();
@@ -130,4 +140,11 @@ static void checkbatt()
   float Bvoltage2 = 2 * Bvoltage1;             //doubles the initial battery voltage calculation, required because the battery voltage is read using a voltage divider so is 1/2 what it really is, needed for safety of arduino since it will be over 5 volts
   float Bpercent1 = (Bvoltage2 - 6.4);         // creats a value to use in calculating battery percetn remaining.
   int Bpercent = (Bpercent1 * 100) / 2; 
+}
+
+void digipotwrite (int address, int value) {
+  digitalWrite(digipin,LOW);
+  SPI.transfer(address);
+  SPI.transfer(value);
+  digitalWrite(digipin,HIGH);
 }
