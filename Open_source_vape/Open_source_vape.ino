@@ -53,6 +53,7 @@ float watt= 0;
 float Bvoltage2 = 0;
 int Bpercent = 0; 
 float Vbatt = 0;
+int count = 0;
 
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -84,6 +85,7 @@ if (Bvoltage2 < 6.39)
     display.print("BV:");
     display.print(Bvoltage2);
     display.ssd1306_command(SSD1306_DISPLAYOFF);
+    sleepNow();
   }
   else{
 display.clearDisplay();
@@ -108,8 +110,14 @@ display.setCursor(5,7);
 display.print("W:");
 display.setCursor(5,10);
 display.print(watt);
+count++;
   }
-
+if (count >=125) {
+  display.ssd1306_command(SSD1306_DISPLAYOFF);
+  delay(100);
+  count = 0;
+  sleepNow();
+  }
 }
 
 //Declare this as a universal call out instead of running in loop that way we can just call to the function from the loop
@@ -154,3 +162,10 @@ void digipotwrite (int address, int value) {
   SPI.transfer(value);
   digitalWrite(digipin,HIGH);
 }
+
+void sleepNow() {
+  display.ssd1306_command(SSD1306_DISPLAYOFF);
+  set_sleep_mode(SLEEP_MODE_IDLE);
+  sleep_mode();
+}
+
