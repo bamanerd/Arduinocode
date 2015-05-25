@@ -15,3 +15,8 @@ zarboz 20150524.2313:
   refer to branch lm4040 will do testing to see which is more accurate
   prefer the ability to read amperage with hall sensor even though it is
   calculated. Will recreate coding with lm4040
+
+zarboz 20150524.2356:
+  For kicks lets make a 3 number 7 segment display branch I like the
+  look of the gryphon over the OLED screen the LCD is much easier
+  to read.
