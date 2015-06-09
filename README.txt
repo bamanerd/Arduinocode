@@ -9,3 +9,9 @@ zarboz 20150524.2305:
   pots are intended to be run in series meaning 1 step will equal 2 ohms
   currently is coded for use of acs712 soon to be overhauld for an lm4040
   to gain a higher accuracy rate of reading.
+
+zarboz 20150608.1242:
+ Decided to make branch for PWM control
+ todo: Determine what steps of 10k ohm pot = what voltage on 3s lipo
+ impliment math to determine ohms law of desired voltage for watt output
+
