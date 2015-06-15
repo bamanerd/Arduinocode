@@ -19,7 +19,7 @@ Insiduous for some math equations simplification for wattage calcuation
 const int voltPin = A0; //lm4040 input to A0 
 const int ohmPin= A1; //voltage divider with our 5ohm resistor
 const int batteryVoltage = A2; //readout our battery voltage with a2 with 4.7k ohm voltage divider being read.
-const int digipin = 10;
+const int digipin = 10; //we're using a AD8400ARZ1 1k ohm digital potentiometer with a 1.43kohm resistor on ground in order to gain spectrum from OKL needed
 //CS - to digital pin 10 IE digipin
 //SDI - digital pin 11
 //CLK - digital pin 13
@@ -46,7 +46,7 @@ double Amps = 0;
 int raw= 0;
 int Vin= Voltage;
 float Vout= 0;
-float R1= 10;  //we use a 10ohm resistor for the ohmpinA1 voltage divider in order to determine our atomizer resistance
+float R1= 5;  //we use a 5ohm resistor for the ohmpinA1 voltage divider in order to determine our atomizer resistance
 float ohm= 0;
 float buffer= 0;
 float watt= 0;
