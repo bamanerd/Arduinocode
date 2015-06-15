@@ -54,6 +54,8 @@ float Bvoltage2 = 0;
 int Bpercent = 0; 
 float Vbatt = 0;
 int count = 0;
+boolean noAutofire = false; //let's take some safety coding from Claviger's experience
+int countLimit;
 
 #if (SSD1306_LCDHEIGHT != 64)
 #error("Height incorrect, please fix Adafruit_SSD1306.h!");
@@ -74,6 +76,9 @@ void setup () {
 
 
 void loop(){
+  if (countLimit <= 199) noAutofire = false;  // if the atty has fired for less than 12 seconds noAutofire will not be true
+  if (countLimit >= 200) noAutofire = true;   // if the atty has fired for more than 12 seconds noAutofire will  be true
+         
  //First things first lets check our battery and make sure we are able to run if battery is low then display a lockout screen
 checkbatt();
 if (Bvoltage2 < 6.39) 
